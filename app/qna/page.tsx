@@ -348,46 +348,47 @@ export default function DocumentChat() {
 
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
-      {captchaToken === undefined && (
-        <motion.div 
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          <motion.div 
-            className="bg-white p-6 rounded-lg max-w-md w-full mx-4 flex flex-col items-center justify-center"
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-          >
-            <h2 className="text-xl font-semibold mb-4 text-center">Please verify you are human</h2>
-            {captchaError && (
-              <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
-                {captchaError}
-              </div>
-            )}
-            {isCaptchaVerifying && (
-              <div className="mb-4 flex items-center space-x-2">
-                <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-                </div>
-                <span className="text-sm text-gray-600">Verifying...</span>
-              </div>
-            )}
-            <HCaptcha
-              ref={captchaRef}
-              sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY || ''}
-              onLoad={handleCaptchaLoad}
-              onError={handleCaptchaError}
-              onExpire={handleCaptchaExpired}
-              onVerify={handleCaptchaVerify}
-            />
-          </motion.div>
-        </motion.div>
+{captchaToken === undefined && (
+  <motion.div 
+    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+  >
+    <motion.div 
+      className="bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full mx-4 flex flex-col items-center justify-center"
+      initial={{ scale: 0.9, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      exit={{ scale: 0.9, opacity: 0 }}
+    >
+      {captchaError && (
+        <div className="mb-4 p-3 bg-red-100 border border-red-300 text-red-700 rounded-lg w-full text-center">
+          {captchaError}
+        </div>
       )}
+
+      {isCaptchaVerifying && (
+        <div className="mb-4 flex items-center space-x-2">
+          <div className="flex space-x-1">
+            <div className="w-2.5 h-2.5 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+            <div className="w-2.5 h-2.5 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+            <div className="w-2.5 h-2.5 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+          </div>
+          <span className="text-sm text-gray-700">Verifying...</span>
+        </div>
+      )}
+
+      <HCaptcha
+        ref={captchaRef}
+        sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY || ''}
+        onLoad={handleCaptchaLoad}
+        onError={handleCaptchaError}
+        onExpire={handleCaptchaExpired}
+        onVerify={handleCaptchaVerify}
+      />
+    </motion.div>
+  </motion.div>
+)}
 
       {/* Mobile Navigation */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-800 shadow-md">
@@ -509,7 +510,7 @@ export default function DocumentChat() {
             </motion.div>
           )}
         </div>
-        <div className="p-4 border-t dark:border-gray-700 flex items-center gap-2 mb-20">
+        <div className="p-4 border-t dark:border-gray-700 flex items-center gap-2 ">
           <Input
             placeholder="Type your message..."
             value={input}
