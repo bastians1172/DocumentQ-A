@@ -5,7 +5,6 @@ import { supabaseAdmin } from '@/utils/supabaseAdmin';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { SupabaseVectorStore } from '@langchain/community/vectorstores/supabase';
 import { HuggingFaceTransformersEmbeddings } from '@langchain/community/embeddings/hf_transformers';
-import { Document } from 'langchain/document';
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { DocxLoader } from "@langchain/community/document_loaders/fs/docx";
 import { TextLoader } from "langchain/document_loaders/fs/text";

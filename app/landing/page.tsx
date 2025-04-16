@@ -153,7 +153,7 @@ export default function LandingPage() {
             viewport={{ once: true }}
             className="text-lg mb-8"
           >
-            Join thousands of users leveraging AI to unlock their document's potential.
+            Join thousands of users leveraging AI to unlock their document&apos;s potential.
           </motion.p>
           <Link 
             href="/qna"

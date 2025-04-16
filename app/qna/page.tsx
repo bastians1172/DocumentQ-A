@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/utils/supabase";
 import HCaptcha from '@hcaptcha/react-hcaptcha';
-import { Menu, X, FileText } from "lucide-react";
+import {X, FileText } from "lucide-react";
 import Image from "next/image";
 import {DarkModeToggle} from '@/components/darkmode/darkmode'
 
@@ -34,10 +34,6 @@ interface FileItem {
   user_id: string;
 }
 
-interface ContextItem {
-  pageContent: string;
-  metadata: Record<string, any>;
-}
 
 export default function DocumentChat() {
   const [mounted, setMounted] = useState(false);
@@ -71,8 +67,8 @@ export default function DocumentChat() {
     setIsCaptchaVerifying(false);
   };
 
-  const handleCaptchaError = (err: any) => {
-    console.error('hCaptcha Error:', err);
+  const handleCaptchaError = () => {
+    console.error('hCaptcha Error:');
     setCaptchaError('Failed to load captcha. Please try refreshing the page.');
     setIsCaptchaVerifying(false);
   };
@@ -104,7 +100,7 @@ export default function DocumentChat() {
           return;
         }
 
-        const { data, error } = await supabase.auth.signInAnonymously({
+        const {  error } = await supabase.auth.signInAnonymously({
           options: {
             captchaToken: captchaToken
           }
@@ -222,7 +218,7 @@ export default function DocumentChat() {
     }
   };
 
-  const fetchFiles = async () => {
+  const fetchFiles = useCallback(async () => {
     if (!userId) return;
     
     try {
@@ -244,7 +240,12 @@ export default function DocumentChat() {
       console.error('Error fetching files:', error);
       setFiles([]);
     }
-  };
+  }, [userId]);
+
+  // Auto-refresh file list
+  useEffect(() => {
+    fetchFiles();
+  }, [fetchFiles]);
 
   const handleDeleteFile = async (hash: string) => {
     setIsDelete(true)
@@ -269,11 +270,6 @@ export default function DocumentChat() {
       setIsDelete(false)
     }
   };
-
-  // Auto-refresh file list
-  useEffect(() => {
-    fetchFiles();
-  }, [userId]);
 
   // Handle chat messages
   const handleSend = async () => {

@@ -3,7 +3,6 @@
 import { ChatGroq } from "@langchain/groq";
 
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { SupabaseVectorStore } from "@langchain/community/vectorstores/supabase";
 import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/hf_transformers";
 import { supabase } from '@/utils/supabase';

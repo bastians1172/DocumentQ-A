@@ -5,7 +5,7 @@ export async function POST(req: Request) {
 
 
 const { userId } = await req.json();
-const { data: file, error: fileError } = await supabase
+const { data: file } = await supabase
 .from('uploaded_files')
 .select('*')
 .eq('user_id', userId)
